@@ -68,9 +68,9 @@ def preprocessDataset():
     Y = Y[indices]
     text.insert(END,"Dataset Preprocessing Completed\n")
     text.insert(END,"Dataset contains total persons ECG = "+str(X.shape[0])+"\n")
-    text.insert(END,"Each person ECG contains total features = "+str(X.shape[1])+"\n")
+    text.insert(END,"Each person ECG contains total records = "+str(X.shape[1])+"\n")
     
-def runSVM():
+def runSVM()
     text.delete('1.0', END)
     alg_accuracy.clear()
     global X, Y
