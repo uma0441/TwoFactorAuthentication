@@ -21,27 +21,28 @@ main = tkinter.Tk()
 main.title("Heartbeat Authentication") 
 main.geometry("1366x768")
 
+
 global filename
 X = []
 Y = []
-global model
 alg_accuracy = []
+global model
 
 def getID(name):
     arr = name.split(".")
     arr = arr[0].split("_")
     return int(arr[1])
 
-def uploadDataset(): 
+def uploadDataset(): #function to upload tweeter profile
     text.delete('1.0', END)
     global filename
     filename = filedialog.askdirectory(initialdir = ".")
     text.delete('1.0', END)
     text.insert(END,"Dataset loaded")
-    
+
 
 def getFourierFlipping(data): #function to calculate FFT on recordings
-    return np.fft.fft(data)/len(data)    
+    return np.fft.fft(data)/len(data)
 
 
 def preprocessDataset():
@@ -66,8 +67,8 @@ def preprocessDataset():
     X = X[indices]
     Y = Y[indices]
     text.insert(END,"Dataset Preprocessing Completed\n")
-    text.insert(END,"Persons count for dataset = "+str(X.shape[0])+"\n")
-    text.insert(END,"Each person ECG contains total records = "+str(X.shape[1])+"\n")
+    text.insert(END,"Dataset contains total persons ECG = "+str(X.shape[0])+"\n")
+    text.insert(END,"Each person ECG contains total features = "+str(X.shape[1])+"\n")
     
 def runSVM():
     text.delete('1.0', END)
@@ -75,7 +76,7 @@ def runSVM():
     global X, Y
     XX = X.reshape(X.shape[0],(X.shape[1]*X.shape[2]))
 
-    X_train, X_test, y_train, y_test = train_test_split(XX, Y, train_size=0.5,random_state=2)
+    X_train, X_test, y_train, y_test = train_test_split(XX, Y, test_size=0.5)
     rfc = svm.SVC(C=2.0,gamma='scale',kernel = 'rbf', random_state = 2)
     rfc.fit(XX, Y)
     predict = rfc.predict(X_test)
@@ -88,12 +89,12 @@ def runSVM():
     text.insert(END,"SVM Accuracy on ECG Dataset : "+str(svm_acc)+"\n")
     text.insert(END,"SVM Mean Absolute Error : "+str(mae)+"\n")
     text.insert(END,"SVM Mean Squared Error  : "+str(mse)+"\n\n")
-    
+
 def runDT():
     global model
     global X, Y
     XX = X.reshape(X.shape[0],(X.shape[1]*X.shape[2]))
-    X_train, X_test, y_train, y_test = train_test_split(XX, Y, train_size=0.6, random_state =3)
+    X_train, X_test, y_train, y_test = train_test_split(XX, Y, test_size=0.5)
     rfc = DecisionTreeClassifier()
     rfc.fit(XX, Y)
     model = rfc
