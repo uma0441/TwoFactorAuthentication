@@ -70,7 +70,7 @@ def preprocessDataset():
     text.insert(END,"Dataset contains total persons ECG = "+str(X.shape[0])+"\n")
     text.insert(END,"Each person ECG contains total records = "+str(X.shape[1])+"\n")
     
-def runSVM()
+def runSVM():
     text.delete('1.0', END)
     alg_accuracy.clear()
     global X, Y
@@ -82,7 +82,7 @@ def runSVM()
     predict = rfc.predict(X_test)
     for i in range(0,5):
         predict[i] = 40
-    svm_acc = accuracy_score(y_test,predict)
+    svm_acc = accuracy_score(y_test,predict) 
     alg_accuracy.append(svm_acc)
     mse = mean_squared_error(y_test,predict)
     mae = mean_absolute_error(y_test,predict)
