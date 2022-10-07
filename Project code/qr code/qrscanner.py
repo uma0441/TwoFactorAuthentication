@@ -24,7 +24,7 @@ cap = cv2.VideoCapture(0)
 while True:
     ret, frame = cap.read()
     decoder(frame)
-    cv2.imshow('Person1', frame)
+    cv2.imshow('Person1,Person0,Person2,Person15', frame)
     code = cv2.waitKey(10)
     if code == ord('q'):
         break

@@ -2,7 +2,7 @@
 import qrcode
 
 # Data to encode
-data = "person19"
+data = "person20"
 attributes = "two"
 
 # Creating an instance of QRCode class
@@ -15,7 +15,7 @@ qr.add_data(data)
 qr.add_data(attributes)
 
 qr.make(fit = True)
-img = qr.make_image(fill_color = 'black',
+img = qr.make_image(fill_color = 'red',
 					back_color = 'white')
 
-img.save('Person19.png')
+img.save('Person20.png')
