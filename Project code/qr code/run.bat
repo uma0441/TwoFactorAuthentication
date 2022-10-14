@@ -1,2 +1,2 @@
-python Code.py
+python qrscanner.py
 pause
