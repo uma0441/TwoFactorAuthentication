@@ -76,7 +76,7 @@ def runSVM():
     global X, Y
     XX = X.reshape(X.shape[0],(X.shape[1]*X.shape[2]))
 
-    X_train, X_test, y_train, y_test = train_test_split(XX, Y, test_size=0.5)
+    X_train, X_test, y_train, y_test = train_test_split(XX, Y, test_size=0.9)
     rfc = svm.SVC(C=2.0,gamma='scale',kernel = 'rbf', random_state = 2)
     rfc.fit(XX, Y)
     predict = rfc.predict(X_test)
@@ -94,7 +94,7 @@ def runDT():
     global model
     global X, Y
     XX = X.reshape(X.shape[0],(X.shape[1]*X.shape[2]))
-    X_train, X_test, y_train, y_test = train_test_split(XX, Y, test_size=0.5)
+    X_train, X_test, y_train, y_test = train_test_split(XX, Y, test_size=0.9)
     rfc = DecisionTreeClassifier()
     rfc.fit(XX, Y)
     model = rfc
