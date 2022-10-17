@@ -18,30 +18,31 @@ from sklearn.metrics import mean_squared_error
 
 
 main = tkinter.Tk()
-main.title("Heartbeat Authentication") #designing main screen
+main.title("Heartbeat Authentication") 
 main.geometry("1366x768")
+
 
 global filename
 X = []
 Y = []
-global model
 alg_accuracy = []
+global model
 
 def getID(name):
     arr = name.split(".")
     arr = arr[0].split("_")
     return int(arr[1])
 
-def uploadDataset(): 
+def uploadDataset(): #function to upload tweeter profile
     text.delete('1.0', END)
     global filename
     filename = filedialog.askdirectory(initialdir = ".")
     text.delete('1.0', END)
     text.insert(END,"Dataset loaded")
-    
+
 
 def getFourierFlipping(data): #function to calculate FFT on recordings
-    return np.fft.fft(data)/len(data)    
+    return np.fft.fft(data)/len(data)
 
 
 def preprocessDataset():
@@ -66,7 +67,7 @@ def preprocessDataset():
     X = X[indices]
     Y = Y[indices]
     text.insert(END,"Dataset Preprocessing Completed\n")
-    text.insert(END,"Persons count for dataset = "+str(X.shape[0])+"\n")
+    text.insert(END,"Dataset contains total persons ECG = "+str(X.shape[0])+"\n")
     text.insert(END,"Each person ECG contains total records = "+str(X.shape[1])+"\n")
     
 def runSVM():
@@ -75,25 +76,25 @@ def runSVM():
     global X, Y
     XX = X.reshape(X.shape[0],(X.shape[1]*X.shape[2]))
 
-    X_train, X_test, y_train, y_test = train_test_split(XX, Y, test_size=0.5,random_state=2)
+    X_train, X_test, y_train, y_test = train_test_split(XX, Y, test_size=0.9)
     rfc = svm.SVC(C=2.0,gamma='scale',kernel = 'rbf', random_state = 2)
     rfc.fit(XX, Y)
     predict = rfc.predict(X_test)
     for i in range(0,5):
         predict[i] = 40
-    svm_acc = accuracy_score(y_test,predict)
+    svm_acc = accuracy_score(y_test,predict) 
     alg_accuracy.append(svm_acc)
     mse = mean_squared_error(y_test,predict)
     mae = mean_absolute_error(y_test,predict)
     text.insert(END,"SVM Accuracy on ECG Dataset : "+str(svm_acc)+"\n")
     text.insert(END,"SVM Mean Absolute Error : "+str(mae)+"\n")
     text.insert(END,"SVM Mean Squared Error  : "+str(mse)+"\n\n")
-    
+
 def runDT():
     global model
     global X, Y
     XX = X.reshape(X.shape[0],(X.shape[1]*X.shape[2]))
-    X_train, X_test, y_train, y_test = train_test_split(XX, Y, train_size=0.6)
+    X_train, X_test, y_train, y_test = train_test_split(XX, Y, test_size=0.9)
     rfc = DecisionTreeClassifier()
     rfc.fit(XX, Y)
     model = rfc
@@ -127,7 +128,7 @@ def predict():
     
 font = ('times', 16, 'bold')
 title = Label(main, text='Heartbeat Authentication')
-title.config(bg='#72e64c', fg='#e01f4a')  
+title.config(bg='#6f98e7', fg='#0B0B00')  
 title.config(font=font)           
 title.config(height=3, width=120)       
 title.place(x=0,y=5)
@@ -157,9 +158,9 @@ dtButton = Button(main, text="Train Decision Tree Algorithm", command=runDT, bg=
 dtButton.place(x=720,y=550)
 dtButton.config(font=font1)
 
-authButton = Button(main, text="Upload ECG Test Data & Authenticate User", command=predict, bg='#6f98e7')
-authButton.place(x=500,y=600)
+authButton = Button(main, text="Authenticate User", command=predict, bg='#6f98e7')
+authButton.place(x=50,y=600)
 authButton.config(font=font1) 
 
-main.config(bg='#b9f3a5')
+main.config(bg='#EABCEA')
 main.mainloop()
