@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 from tkinter.filedialog import askopenfilename
 import numpy as np
 import os
+import cv2
+from pyzbar.pyzbar import decode
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn import svm
@@ -124,7 +126,11 @@ def predict():
     predict = model.predict(testData)
     print(predict)
     text.insert(END,"Uploaded ECG Authenticated and Belongs to Person ID : "+str(predict[0]))
+ 
+
+  
     
+       
     
 font = ('times', 16, 'bold')
 title = Label(main, text='Heartbeat Authentication')
@@ -161,6 +167,8 @@ dtButton.config(font=font1)
 authButton = Button(main, text="Authenticate User", command=predict, bg='#6f98e7')
 authButton.place(x=50,y=600)
 authButton.config(font=font1) 
+
+
 
 main.config(bg='#EABCEA')
 main.mainloop()
