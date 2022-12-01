@@ -1,0 +1,2 @@
+python qrscanner.py
+pause
